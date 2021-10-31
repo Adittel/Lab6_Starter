@@ -1,6 +1,9 @@
 class RecipeCard extends HTMLElement {
   constructor() {
     // Part 1 Expose - TODO
+    super();
+
+    let shadow = this.attachShadow({mode: 'open'});
 
     // You'll want to attach the shadow DOM here
   }
@@ -95,7 +98,42 @@ class RecipeCard extends HTMLElement {
     //    element.setAttribute()
     //    element.appendChild()
     //    & All of the helper functions below
+    
+ //img source
+ const img = document.createElement('Recipe Title');
+ img.setAttribute ('src', searchForKey(data,thumbnail));
+ card.appendChild(img);
+  //title
+ const title = document.createElement('p');
+ title.classList.add('title');
+ const link = document.createElement('a');
+ link.setAttribute ('href', searchForKey(data,url));
+ link.setAttribute('title',searchForKey(data,headline))
+ title.appendChild(link);
+ card.appendChild(title);
+/*<p class="organization">The Chef's Organization</p>
+  <div class="rating">
+    <!-- Average Review out of 5 -->
+    <span>5</span>
+    <!-- Corresponding image to avg review score -->
+    <img src="/assets/images/icons/5-star.svg" alt="5 stars">
+    <!-- Total number of reviews -->
+    <span>(500)</span>
+  </div>
+  <time>50 min</time>
+  <p class="ingredients">
+    Comma, Separated, List, of, Ingredients
+  </p>
+  */
+ //rating image
+ ratingCount
+ //num of reviews
+ ratingValue
+ //time
+ //imgredentints
 
+this.shadowRoot.appendChild(card);
+this.shadowRoot.appendChild(styleElem);
     // Make sure to attach your root element and styles to the shadow DOM you
     // created in the constructor()
 
