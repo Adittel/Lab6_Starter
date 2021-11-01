@@ -19,6 +19,7 @@ window.addEventListener('DOMContentLoaded', init);
 async function init() {
   // fetch the recipes and wait for them to load
   let fetchSuccessful = await fetchRecipes();
+  console.log(Object.keys(recipeData).length);
   // if they didn't successfully load, quit the function
   if (!fetchSuccessful) {
     console.log('Recipe fetch unsuccessful');
@@ -43,17 +44,29 @@ async function fetchRecipes() {
     // in the recipes folder and fetch them from there. You'll need to add their paths to the recipes array.
 
     // Part 1 Expose - TODO
-    for (var x in recipes) {
+    for (const x of recipes)
+ {
   fetch(x)
-  .then(response => data[x]=response.json())
-  .catch(error => console.log('fail'));
+  .then (data => data.json())
+    .then (function(data) {
+    
+     recipeData[x]=data;
+     console.log(recipeData[x]);
+     
+     if(Object.keys(recipeData).length==3)
+      resolve(true)
+    })
+  .catch((error) => {
+     
+     reject(false);
+  })
+}
   
 }
-if(Object.keys(recipeData).length==3)
-resolve(true);
-
-  });
+);
 }
+  
+
 
 function createRecipeCards() {
   // This function is called for you up above.
@@ -64,9 +77,9 @@ function createRecipeCards() {
 
   // Part 1 Expose - TODO
   for (var x in recipeData) {
-    const holder = document.createElement ('RecipeCard');
+    const holder = document.createElement ('recipe-card');
     holder.data=recipeData[x]
-    document.getElementsByClassName("main").appendChild(holder); 
+    document.querySelector("main").appendChild(holder); 
   }
 }
 

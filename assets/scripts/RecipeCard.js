@@ -100,37 +100,84 @@ class RecipeCard extends HTMLElement {
     //    & All of the helper functions below
     
  //img source
- const img = document.createElement('Recipe Title');
- img.setAttribute ('src', searchForKey(data,thumbnail));
+ 
+ const img = document.createElement('img');
+ img.setAttribute ('src', searchForKey(data,"thumbnailUrl"));
  card.appendChild(img);
   //title
  const title = document.createElement('p');
  title.classList.add('title');
  const link = document.createElement('a');
- link.setAttribute ('href', searchForKey(data,url));
- link.setAttribute('title',searchForKey(data,headline))
+ link.setAttribute ('href', searchForKey(data,"url"));
+ link.textContent=searchForKey(data,"headline");
  title.appendChild(link);
  card.appendChild(title);
-/*<p class="organization">The Chef's Organization</p>
-  <div class="rating">
-    <!-- Average Review out of 5 -->
-    <span>5</span>
-    <!-- Corresponding image to avg review score -->
-    <img src="/assets/images/icons/5-star.svg" alt="5 stars">
-    <!-- Total number of reviews -->
-    <span>(500)</span>
-  </div>
-  <time>50 min</time>
-  <p class="ingredients">
-    Comma, Separated, List, of, Ingredients
-  </p>
-  */
+ 
+ 
+  const org = document.createElement('p');
+  org.classList.add('organization');
+  org.textContent= searchForKey(data,"name");
+  card.appendChild(org);
+
+  var temprate= searchForKey(data,"ratingValue");
+  var tempcount=searchForKey(data,"ratingCount");
+  if (temprate){
+    
+    const div1 = document.createElement('div');
+    div1.classList.add('rating');
+    const spans = document.createElement('span');
+    spans.textContent= temprate;
+    const spanx = document.createElement('span');
+    spanx.textContent= tempcount;
+    div1.appendChild(spans);
+    //go from above 4 down
+    
+ const im = document.createElement('img');
+ 
+    if(temprate>4){
+      im.setAttribute ('src',"assets/images/icons/5-star.svg");
+    }
+    else if(temprate>3){
+      im.setAttribute ('src',"assets/images/icons/4-star.svg");
+    }
+    else if(temprate>2){
+      im.setAttribute ('src',"assets/images/icons/3-star.svg");
+    }
+    else if(temprate>1){
+      im.setAttribute ('src',"assets/images/icons/2-star.svg");
+    }
+    else if(temprate>0){
+      im.setAttribute ('src',"assets/images/icons/1-star.svg");
+    }
+    div1.appendChild(im);
+
+    div1.appendChild(spanx);
+    card.appendChild(div1);
+  }
+  else{
+    const div1 = document.createElement('div');
+    div1.classList.add('rating');
+    const spans = document.createElement('span');
+    spans.textContent= "No Reviews";
+    div1.appendChild(spans);
+  
+    card.appendChild(div1);
+  
+  }
+  
+  console.log(convertTime(searchForKey(data,"totalTime")));
+ const time = document.createElement('time');
+ time.textContent=convertTime(searchForKey(data,"totalTime"));
+ card.appendChild(time);
+
+const ingredient = document.createElement('p');
+ingredient.classList.add('ingredients');
+ingredient.textContent= createIngredientList(searchForKey(data,"recipeIngredient"));
+card.appendChild(ingredient);
  //rating image
- ratingCount
+ //ratingCount
  //num of reviews
- ratingValue
- //time
- //imgredentints
+ //ratingValue 
 
 this.shadowRoot.appendChild(card);
 this.shadowRoot.appendChild(styleElem);
